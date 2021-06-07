@@ -26,9 +26,9 @@ provider.setCustomParameters({ prompt: "select_account" });
 auth.onAuthStateChanged(
 	usuarioAuth => {
 		if (usuarioAuth && usuarioAuth.email) {
-			user.value = usuarioAuth.displayName;
-			email.value = usuarioAuth.displayName;
-			avatar.src = usuarioAuth.photoURL;
+			user.value = usuarioAuth.email || "";
+			email.value = usuarioAuth.displayName || "";;
+			avatar.src = usuarioAuth.photoURL || "";;
 		} else {
 			auth.signInWithRedirect(provider);
 		}
