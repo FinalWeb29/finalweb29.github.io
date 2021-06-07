@@ -2,5 +2,5 @@
 Firebase:
 - Authentication
 - Firestore Database
-- Storage
+- Storage\n
 Web page: https://finalweb29.github.io
