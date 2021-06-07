@@ -13,11 +13,13 @@ var db = firebase.firestore(),
 	eliminar = document.getElementById('eliminar'),
 	form = document.getElementById('form'),
 	output = document.getElementById('output'),
+	session = document.getElementById('session'),
 	userD = document.getElementById('user');
 const auth = firebase.auth(),
 	provider = new firebase.auth.GoogleAuthProvider();
 form.addEventListener('submit', action, false);
 form["cancelar"].addEventListener('click', limpiar, false);
+session.addEventListener('click', terminarSesion, false);
 provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 auth.languageCode = 'it';
 provider.setCustomParameters({ prompt: "select_account" });
@@ -35,10 +37,9 @@ auth.onAuthStateChanged(
 );
 
 async function terminarSesion() {
-	try	{
-		await auth.signOut();
-	} catch (e) {
-		procesaError(e);
+	if (confirm("¿Cerrar Sesión?")) {
+		try	{ await auth.signOut(); } 
+		catch (e) { procesaError(e); }
 	}
 }
 
