@@ -12,7 +12,8 @@ var db = firebase.firestore(),
 	modificar = document.getElementById('modificar'),
 	eliminar = document.getElementById('eliminar'),
 	form = document.getElementById('form'),
-	output = document.getElementById('output');
+	output = document.getElementById('output'),
+	userD = document.getElementById('user');
 const auth = firebase.auth(),
 	provider = new firebase.auth.GoogleAuthProvider();
 form.addEventListener('submit', action, false);
@@ -24,6 +25,7 @@ auth.onAuthStateChanged(
 	usuarioAuth => {
 		if (usuarioAuth && usuarioAuth.email) {
 			user.value = usuarioAuth.displayName;
+			email.value = usuarioAuth.displayName;
 			avatar.src = usuarioAuth.photoURL;
 		} else {
 			auth.signInWithRedirect(provider);
@@ -97,7 +99,7 @@ function escribir() {
 	    nombre: form["nombre"].value,
 	    carrera: form["carrera"].value,
 	    fecha: form["fecha"].value,
-	    doctor: "Bruce Wayn"
+	    doctor: userD
 	}
 	db.collection("citas").add(data)
 	.then(() => {
