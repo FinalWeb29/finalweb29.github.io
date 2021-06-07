@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+	<script src="js/firebase.js"></script>
+	<title>Programar Cita</title>
+</head>
+<body class="col">
+	<div id="id01" class="modal center">
+		<div class="alert animate">
+			<div class="head">
+				<a onclick="javascript:closeModal()">x Cerrar</a>
+				<p>INFORMACI&Oacute;N DE LA CITA</p>
+			</div>
+			<div class="info col center">
+				<p>
+					Boleta: <span id="boletaC"></span> | Fecha: <span id="fechaC"></span><br><br>
+					Nombre: <span id="nombreC"></span><br>
+					Carrera: <span id="carreraC"></span><br>
+					Doctor: <span id="doctorC"></span><br>
+				</p>
+				<div class="row">
+					<button id="modificar" class="ok" onclick="javascript:editar(this)">Modificar</button>
+					<button id="eliminar" class="ok red" onclick="javascript:borrar(this)">Eliminar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<header class="row space-around">
+		<div class="grow1"></div>
+		<h1 class="grow4">Programar cita</h1>
+		<div id="session" class="row center grow1">
+			<figure><img id="avatar" alt="avatar"></figure>
+			<p><output id="user"></output><br>Cerrar sesi&oacute;n</p>
+		</div>
+	</header>
+	<div class="row space-around">
+		<div class="grow1"></div>
+		<form id="form" action="javascript:;" method="post" class="col grow1" autocomplete="off">
+			<label for="boleta" class="atach">Boleta</label>
+			<input type="text" id="boleta" name="boleta" pattern="^([0-9])*$" title="Solo n&uacute;meros" autofocus required>
+			<label for="nombre" class="atach">Nombre completo</label>
+			<input type="text" id="nombre" name="nombre" pattern="^([a-zA-Z\s])*$" title="Solo letras" required>
+			<label for="carrera" class="atach">Carrera</label>
+			<input list="carreras" id="carrera" name="carrera" required>
+			<datalist id="carreras">
+				<option value="Ciencias de la Inform&aacute;tica">
+				<option value="Ingenier&iacute;a en Inform&aacute;tica">
+				<option value="Administraci&oacute;n Industrial">
+				<option value="Ingenier&iacute;a Industrial">
+				<option value="Ingenier&iacute;a en Transportes">
+			</datalist>
+			<label for="fecha" class="atach">Fecha y hora de la cita</label>
+			<input type="date" id="fecha" name="fecha" min="04-05-2021" required>
+			<div class="row center">
+				<input type="submit" id="guardar" name="guardar" value="Guardar">
+				<input type="submit" id="actua" name="actua" data-cita="" value="Actualizar">
+				<input type="button" class="ok red" id="cancelar" name="cancelar" value="Cancelar">
+			</div>
+		</form>
+		<fieldset class="col grow4">
+			<legend>Citas</legend>
+			<output id="output"></output>
+		</fieldset>
+		<div class="grow1"></div>
+	</div>
+	<footer>Copyright&copy; 2021 Salazar Flores Roberto</footer>
+	<script src="js/ctl.js"></script>
+</body>
+</html>
