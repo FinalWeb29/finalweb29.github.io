@@ -24,7 +24,7 @@ h1 {
 	text-align: left;
 	text-transform: capitalize;
 	border: 2px solid transparent;
-	border-radius: 40px;
+	border-radius: 50px;
 	cursor: pointer;
 	transition: 0.4s;
 }
@@ -34,7 +34,10 @@ h1 {
 	padding: 0;
 }
 #user { color: black; }
-#email { color: grey; }
+#email { 
+	color: grey; 
+	text-transform: lowercase;	
+}
 figure {
 	margin: 0;
 	padding: 0;
@@ -42,7 +45,7 @@ figure {
 	height: 70px;
 }
 img	{
-	border-radius: 40px;
+	border-radius: 50px;
 	width: 70px;
 	height: 70px;
 }
@@ -50,6 +53,7 @@ img	{
 input {
 	margin: 0 0 10px 0;
 	padding: 5px;
+	background-color: white;
 	font-size: 20px;
 	border-radius: 3px;
 	border: 3px solid grey;

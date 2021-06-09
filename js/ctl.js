@@ -1,5 +1,6 @@
 'use strict'
 var db = firebase.firestore(),
+	storage = firebase.storage(),
 	d = new Date(),
 	month = d.getMonth() + 1,
 	date = d.getDate(),
@@ -16,7 +17,7 @@ var db = firebase.firestore(),
 	session = document.getElementById('session'),
 	userD = document.getElementById('user');
 const auth = firebase.auth(),
-	provider = new firebase.auth.GoogleAuthProvider();
+	  provider = new firebase.auth.GoogleAuthProvider();
 form.addEventListener('submit', action, false);
 form["cancelar"].addEventListener('click', limpiar, false);
 session.addEventListener('click', terminarSesion, false);
@@ -26,8 +27,8 @@ provider.setCustomParameters({ prompt: "select_account" });
 auth.onAuthStateChanged(
 	usuarioAuth => {
 		if (usuarioAuth && usuarioAuth.email) {
-			user.value = usuarioAuth.email || "";
-			email.value = usuarioAuth.displayName || "";;
+			user.value = usuarioAuth.displayName || "";
+			email.value = usuarioAuth.email || "";;
 			avatar.src = usuarioAuth.photoURL || "";;
 		} else {
 			auth.signInWithRedirect(provider);
@@ -101,13 +102,14 @@ function escribir() {
 	    carrera: form["carrera"].value,
 	    fecha: form["fecha"].value,
 	    doctor: userD
-	}
+	};
 	db.collection("citas").add(data)
 	.then(() => {
 		alert("¡Cita registrada!");
 		limpiar();
 	})
 	.catch((error) => {console.error("Error al registrar: ", error);});
+	subirFile(form["file"].value, form["boleta"].value)
 }
 
 function leer() {
@@ -134,7 +136,7 @@ function actualizar() {
 	    carrera: form["carrera"].value,
 	    fecha: form["fecha"].value,
 	    doctor: "Bruce Wayn"
-	}
+	};
 	db.collection("citas").doc(form["actua"].getAttribute("data-cita")).set(data)
 	.then(() => {
 		alert("¡Cita registrada!");
@@ -149,6 +151,15 @@ function borrar(cita) {
 		.catch((error) => {console.error("Error al eliminar: ", error);});
 		closeModal();
 	}
+}
+function subirFile(file, id) {
+	var storageRef = storage.ref(),
+		fileRef = storageRef.child(file),
+		fileImagesRef = storageRef.child('images/' + file),
+		metadata = { idRef: id, },
+		uploadTask = storageRef.child('images/mountains.jpg').put(file, metadata);
+
+
 }
 function today() {
 	if (month <= 9) month = "0" + month.toString();
