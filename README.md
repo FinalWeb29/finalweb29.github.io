@@ -1,5 +1,5 @@
 # Proyecto Final Web
-Firebase: asdfghjkl
+Firebase:
 - Authentication
 - Firestore Database
 - Storage
