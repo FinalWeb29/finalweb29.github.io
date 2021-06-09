@@ -105,12 +105,12 @@ async function escribir() {
 	    doctor: userD.value
 	};
 	db.collection("citas").add(data)
-	.then(() => {
+	.then((docRef) => {
+		subirArchivo(form["foto"].value, docRef.id);
 		alert("¡Cita registrada!");
 		limpiar();
 	})
 	.catch((error) => {console.error("Error al registrar: ", error);});
-	subirArchivo(form["foto"].value, form["boleta"].value)
 }
 
 function leer() {
@@ -144,7 +144,7 @@ async function actualizar() {
 		limpiar();
 	})
 	.catch((error) => {console.error("Error al registrar: ", error);});
-	subirArchivo(form["foto"].value, form["boleta"].value);
+	subirArchivo(form["foto"].value, form["actua"].getAttribute("data-cita"));
 }
 async function borrar(cita) {
 	if(confirm("¿Quieres eliminar la cita?")) {
@@ -156,19 +156,18 @@ async function borrar(cita) {
 	}
 }
 async function subirArchivo(archivo, id) {
-	storage.ref().child('fotos/' + id).put(archivo);
+	storage.ref(id).put(archivo);
 }
 async function bajarArchivo(id) {
   try {
-    return await storage.ref('fotos/' + id).getDownloadURL();
+    return await storage.ref(id).getDownloadURL();
   } catch (e) {
     console.log(e);
     return "";
   }
 }
 async function eliminarArchivo(id) {
-	var archivoRef = storageRef.child('fotos/' + id);
-	archivoRef.delete().catch((error) => {
+	storage.ref(id).delete().catch((error) => {
 	  console.error("Error al eliminar: ", error);
 	});
 }
