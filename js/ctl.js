@@ -102,7 +102,7 @@ async function escribir() {
 	    nombre: form["nombre"].value,
 	    carrera: form["carrera"].value,
 	    fecha: form["fecha"].value,
-	    doctor: userD
+	    doctor: userD.value
 	};
 	db.collection("citas").add(data)
 	.then(() => {
