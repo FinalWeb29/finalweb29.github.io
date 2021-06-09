@@ -70,6 +70,7 @@ function showModal(cita) {
 	carreraC.innerHTML = carrera;
 	fechaC.innerHTML = fecha;
 	doctorC.innerHTML = doctor;
+	fotoC.src = bajarArchivo(id);
 	modal.style.display = "flex";
 }
 window.onclick = function(event) {
@@ -95,7 +96,7 @@ function limpiar() {
 		form["actua"].setAttribute("data-cita", "");
 	}
 }
-function escribir() {
+async function escribir() {
 	var data = {
 		boleta: form["boleta"].value,
 	    nombre: form["nombre"].value,
@@ -109,7 +110,7 @@ function escribir() {
 		limpiar();
 	})
 	.catch((error) => {console.error("Error al registrar: ", error);});
-	subirFile(form["file"].value, form["boleta"].value)
+	subirArchivo(form["foto"].value, form["boleta"].value)
 }
 
 function leer() {
@@ -128,7 +129,7 @@ function leer() {
 	    });
 	});
 }
-function actualizar() {
+async function actualizar() {
 	alert("Si en actualizar");
 	var data = {
 		boleta: form["boleta"].value,
@@ -143,24 +144,35 @@ function actualizar() {
 		limpiar();
 	})
 	.catch((error) => {console.error("Error al registrar: ", error);});
+	subirArchivo(form["foto"].value, form["boleta"].value);
 }
-function borrar(cita) {
+async function borrar(cita) {
 	if(confirm("¿Quieres eliminar la cita?")) {
 		db.collection("citas").doc(cita.getAttribute("data-cita")).delete()
 		.then(() => {alert("¡Cita eliminada!");})
 		.catch((error) => {console.error("Error al eliminar: ", error);});
+		eliminarArchivo(cita.getAttribute("data-cita"))
 		closeModal();
 	}
 }
-function subirFile(file, id) {
-	var storageRef = storage.ref(),
-		fileRef = storageRef.child(file),
-		fileImagesRef = storageRef.child('images/' + file),
-		metadata = { idRef: id, },
-		uploadTask = storageRef.child('images/mountains.jpg').put(file, metadata);
-
-
+async function subirArchivo(archivo, id) {
+	storage.ref().child('fotos/' + id).put(archivo);
 }
+async function bajarArchivo(id) {
+  try {
+    return await storage.ref('fotos/' + id).getDownloadURL();
+  } catch (e) {
+    console.log(e);
+    return "";
+  }
+}
+async function eliminarArchivo(id) {
+	var archivoRef = storageRef.child('fotos/' + id);
+	archivoRef.delete().catch((error) => {
+	  console.error("Error al eliminar: ", error);
+	});
+}
+
 function today() {
 	if (month <= 9) month = "0" + month.toString();
 	if (date <= 9) date = "0" + date.toString();
