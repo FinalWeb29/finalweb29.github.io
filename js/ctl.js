@@ -136,7 +136,7 @@ async function actualizar() {
 	    nombre: form["nombre"].value,
 	    carrera: form["carrera"].value,
 	    fecha: form["fecha"].value,
-	    doctor: "Bruce Wayn"
+	    doctor: userD.value
 	};
 	db.collection("citas").doc(form["actua"].getAttribute("data-cita")).set(data)
 	.then(() => {
