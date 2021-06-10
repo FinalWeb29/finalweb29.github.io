@@ -70,7 +70,7 @@ function showModal(cita) {
 	carreraC.innerHTML = carrera;
 	fechaC.innerHTML = fecha;
 	doctorC.innerHTML = doctor;
-	fotoC.src = bajarArchivo(id);
+	fotoC.src = await bajarArchivo(id).toString();
 	modal.style.display = "flex";
 }
 window.onclick = function(event) {
@@ -83,6 +83,7 @@ function editar(cita) {
 	nombre: form["nombre"].value = nombreC.innerHTML.toString();
 	carrera: form["carrera"].value = carreraC.innerHTML.toString();
 	fecha: form["fecha"].value = fechaC.innerHTML.toString();
+	foto: form["foto"].files[0] = bajarArchivo(id)
 	form["actua"].setAttribute("data-cita", id);
 	form["guardar"].style.display = "none";
 	form["actua"].style.display = "grid";
@@ -106,7 +107,7 @@ async function escribir() {
 	};
 	db.collection("citas").add(data)
 	.then((docRef) => {
-		subirArchivo(form["foto"].value, docRef.id);
+		subirArchivo(form["foto"].files[0], docRef.id);
 		alert("¡Cita registrada!");
 		limpiar();
 	})
@@ -144,7 +145,7 @@ async function actualizar() {
 		limpiar();
 	})
 	.catch((error) => {console.error("Error al registrar: ", error);});
-	subirArchivo(form["foto"].value, form["actua"].getAttribute("data-cita"));
+	subirArchivo(form["foto"].files[0], form["actua"].getAttribute("data-cita"));
 }
 async function borrar(cita) {
 	if(confirm("¿Quieres eliminar la cita?")) {
@@ -155,12 +156,14 @@ async function borrar(cita) {
 		closeModal();
 	}
 }
-async function subirArchivo(archivo, id) {
-	storage.ref(id).put(archivo);
+async function subirArchivo(archivo, nombre) {
+	if (archivo instanceof File && archivo.size > 0)
+		storage.ref(nombre).put(archivo);
 }
-async function bajarArchivo(id) {
+async function bajarArchivo(nombre) {
   try {
-    return await storage.ref(id).getDownloadURL();
+    storage.ref(nombre).getDownloadURL()
+    .then((url) => { return await url; });
   } catch (e) {
     console.log(e);
     return "";
