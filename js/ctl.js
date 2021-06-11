@@ -118,8 +118,8 @@ async function escribir() {
 async function leer() {
 	db.collection("citas").orderBy("fecha", "asc").onSnapshot((querySnapshot) => {
 		output.innerHTML = "";
-	  querySnapshot.forEach((doc) => {
-	  	const img = await bajarArchivo(doc.id);
+	  	querySnapshot.forEach((doc) => {
+	  		const img = cod(await bajarArchivo(doc.id));
 			output.innerHTML += `<p id="${doc.id}"
 									data-boleta="${doc.data().boleta}"
 									data-nombre="${doc.data().nombre}"
@@ -130,7 +130,7 @@ async function leer() {
 									onclick="javascript:showModal(this)">
 									Boleta: ${doc.data().boleta} | 
 									Fecha: ${doc.data().fecha}</p>`;
-	  });
+		});
 	});
 }
 async function actualizar() {
@@ -164,10 +164,7 @@ async function subirArchivo(archivo, nombre) {
 		storage.ref(nombre).put(archivo);
 }
 async function bajarArchivo(nombre) {
-  return await storage.ref(nombre).getDownloadURL() 
-  .catch((error) => {
-   	console.error("Error al eliminar: ", error);
-  });
+  return await storage.ref(nombre).getDownloadURL();
 }
 async function eliminarArchivo(id) {
 	storage.ref(id).delete().catch((error) => {
