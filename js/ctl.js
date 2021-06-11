@@ -161,11 +161,7 @@ async function subirArchivo(archivo, nombre) {
 		storage.ref(nombre).put(archivo);
 }
 async function bajarArchivo(nombre) {
-  storage.ref(nombre).getDownloadURL()
-  .then((url) => { 
-   	console.log(url);
-   	return await url; 
-  })
+  return await storage.ref(nombre).getDownloadURL() 
   .catch((error) => {
    	console.error("Error al eliminar: ", error);
   });
