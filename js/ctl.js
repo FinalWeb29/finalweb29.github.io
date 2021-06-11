@@ -118,8 +118,9 @@ async function escribir() {
 async function leer() {
 	db.collection("citas").orderBy("fecha", "asc").onSnapshot((querySnapshot) => {
 		output.innerHTML = "";
-	  	querySnapshot.forEach((doc) => {
-	  		const img = bajarArchivo(doc.id);
+		var img = "";
+	  querySnapshot.forEach((doc) => {
+	  	img = cod(await bajarArchivo(doc.id));
 			output.innerHTML += `<p id="${doc.id}"
 									data-boleta="${doc.data().boleta}"
 									data-nombre="${doc.data().nombre}"
@@ -130,7 +131,7 @@ async function leer() {
 									onclick="javascript:showModal(this)">
 									Boleta: ${doc.data().boleta} | 
 									Fecha: ${doc.data().fecha}</p>`;
-		});
+	  });
 	});
 }
 async function actualizar() {
