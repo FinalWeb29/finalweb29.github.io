@@ -62,7 +62,7 @@ async function showModal(cita) {
 		nombre = cita.getAttribute("data-nombre"),
 		carrera = cita.getAttribute("data-carrera"),
 		fecha = cita.getAttribute("data-fecha"),
-		doctor = cita.getAttribute("data-doctor");
+		doctor = cita.getAttribute("data-doctor"),
 		img = cita.getAttribute("data-imgsrc");
 	modificar.setAttribute("data-cita", id);
 	eliminar.setAttribute("data-cita", id);
@@ -118,7 +118,7 @@ async function escribir() {
 async function leer() {
 	db.collection("citas").orderBy("fecha", "asc").onSnapshot((querySnapshot) => {
 		output.innerHTML = "";
-		const img = await cod(bajarArchivo(doc.id));
+		const img = cod(await bajarArchivo(doc.id));
 	    querySnapshot.forEach((doc) => {
 			output.innerHTML += `<p id="${doc.id}"
 									data-boleta="${doc.data().boleta}"
