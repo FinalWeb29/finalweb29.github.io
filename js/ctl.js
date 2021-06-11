@@ -70,7 +70,7 @@ function showModal(cita) {
 	carreraC.innerHTML = carrera;
 	fechaC.innerHTML = fecha;
 	doctorC.innerHTML = doctor;
-	fotoC.setAttribute("src", bajarArchivo(id).toString());
+	fotoC.src = cod(bajarArchivo(id));
 	modal.style.display = "flex";
 }
 window.onclick = function(event) {
@@ -168,6 +168,11 @@ async function bajarArchivo(nombre) {
     console.log(e);
     return "";
   }
+}
+function cod(texto) {
+  return (texto || "").
+    toString().
+    replace(/[<>"']/g, reemplaza);
 }
 async function eliminarArchivo(id) {
 	storage.ref(id).delete().catch((error) => {
