@@ -169,17 +169,25 @@ async function bajarArchivo(nombre) {
     return "";
   }
 }
-function cod(texto) {
-  return (texto || "").
-    toString().
-    replace(/[<>"']/g, reemplaza);
-}
 async function eliminarArchivo(id) {
 	storage.ref(id).delete().catch((error) => {
 	  console.error("Error al eliminar: ", error);
 	});
 }
-
+function cod(texto) {
+  return (texto || "").
+    toString().
+    replace(/[<>"']/g, reemplaza);
+}
+function reemplaza(letra) {
+  switch (letra) {
+    case "<": return "&lt;";
+    case ">": return "&gt;";
+    case '"': return "&quot;";
+    case "'": return "&#039;";
+    default: return letra;
+  }
+}
 function today() {
 	if (month <= 9) month = "0" + month.toString();
 	if (date <= 9) date = "0" + date.toString();
