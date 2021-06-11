@@ -119,8 +119,8 @@ async function leer() {
 	db.collection("citas").orderBy("fecha", "asc").onSnapshot((querySnapshot) => {
 		output.innerHTML = "";
 	  querySnapshot.forEach((doc) => {
-	  const img = cod(await bajarArchivo(doc.id));
-		output.innerHTML += `<p id="${doc.id}"
+	  	const img = await bajarArchivo(doc.id);
+			output.innerHTML += `<p id="${doc.id}"
 									data-boleta="${doc.data().boleta}"
 									data-nombre="${doc.data().nombre}"
 									data-carrera="${doc.data().carrera}"
