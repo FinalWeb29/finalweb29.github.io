@@ -45,7 +45,8 @@ figure {
 	height: 70px;
 }
 #fotoC {
-
+	padding: 10px;
+	max-width: 300px;
 }
 #avatar	{
 	border-radius: 50px;
