@@ -56,7 +56,7 @@ function action() {
 	else actualizar();
 }
 function closeModal() {modal.style.display = 'none';}
-function showModal(cita) {
+async function showModal(cita) {
 	var id = cita.getAttribute("id"),
 		boleta = cita.getAttribute("data-boleta"),
 		nombre = cita.getAttribute("data-nombre"),
@@ -70,7 +70,7 @@ function showModal(cita) {
 	carreraC.innerHTML = carrera;
 	fechaC.innerHTML = fecha;
 	doctorC.innerHTML = doctor;
-	fotoC.src = cod(bajarArchivo(id));
+	fotoC.src = await cod(bajarArchivo(id));
 	modal.style.display = "flex";
 }
 window.onclick = function(event) {
@@ -164,7 +164,7 @@ async function bajarArchivo(nombre) {
   storage.ref(nombre).getDownloadURL()
   .then((url) => { 
    	console.log(url);
-   	return url; 
+   	return await url; 
   })
   .catch((error) => {
    	console.error("Error al eliminar: ", error);
