@@ -63,6 +63,7 @@ async function showModal(cita) {
 		carrera = cita.getAttribute("data-carrera"),
 		fecha = cita.getAttribute("data-fecha"),
 		doctor = cita.getAttribute("data-doctor");
+		img = cita.getAttribute("data-imgsrc");
 	modificar.setAttribute("data-cita", id);
 	eliminar.setAttribute("data-cita", id);
 	boletaC.innerHTML = boleta;
@@ -70,7 +71,7 @@ async function showModal(cita) {
 	carreraC.innerHTML = carrera;
 	fechaC.innerHTML = fecha;
 	doctorC.innerHTML = doctor;
-	fotoC.src = await cod(bajarArchivo(id));
+	fotoC.src = img;
 	modal.style.display = "flex";
 }
 window.onclick = function(event) {
@@ -114,9 +115,10 @@ async function escribir() {
 	.catch((error) => {console.error("Error al registrar: ", error);});
 }
 
-function leer() {
+async function leer() {
 	db.collection("citas").orderBy("fecha", "asc").onSnapshot((querySnapshot) => {
 		output.innerHTML = "";
+		const img = await cod(bajarArchivo(doc.id));
 	    querySnapshot.forEach((doc) => {
 			output.innerHTML += `<p id="${doc.id}"
 									data-boleta="${doc.data().boleta}"
@@ -124,6 +126,7 @@ function leer() {
 									data-carrera="${doc.data().carrera}"
 									data-fecha="${doc.data().fecha}"
 									data-doctor="${doc.data().doctor}"
+									data-imgsrc="${img}"
 									onclick="javascript:showModal(this)">
 									Boleta: ${doc.data().boleta} | 
 									Fecha: ${doc.data().fecha}</p>`;
