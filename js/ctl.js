@@ -70,7 +70,7 @@ function showModal(cita) {
 	carreraC.innerHTML = carrera;
 	fechaC.innerHTML = fecha;
 	doctorC.innerHTML = doctor;
-	fotoC.src = await bajarArchivo(id).toString();
+	fotoC.setAttribute("src", bajarArchivo(id).toString());
 	modal.style.display = "flex";
 }
 window.onclick = function(event) {
