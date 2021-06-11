@@ -163,7 +163,7 @@ async function subirArchivo(archivo, nombre) {
 async function bajarArchivo(nombre) {
   try {
     storage.ref(nombre).getDownloadURL()
-    .then((url) => { return await url; });
+    .then((url) => { return url; });
   } catch (e) {
     console.log(e);
     return "";
