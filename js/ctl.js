@@ -161,13 +161,14 @@ async function subirArchivo(archivo, nombre) {
 		storage.ref(nombre).put(archivo);
 }
 async function bajarArchivo(nombre) {
-  try {
-    storage.ref(nombre).getDownloadURL()
-    .then((url) => { return url; });
-  } catch (e) {
-    console.log(e);
-    return "";
-  }
+  storage.ref(nombre).getDownloadURL()
+  .then((url) => { 
+   	console.log(url);
+   	return url; 
+  })
+  .catch((error) => {
+   	console.error("Error al eliminar: ", error);
+  });
 }
 async function eliminarArchivo(id) {
 	storage.ref(id).delete().catch((error) => {
