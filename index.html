@@ -52,7 +52,7 @@
 		<div class="grow1"></div>
 		<form id="form" action="javascript:;" method="post" class="col grow1" autocomplete="off">
 			<label for="boleta" class="atach">Boleta</label>
-			<input type="text" id="boleta" name="boleta" pattern="^([0-9])*$" title="Solo n&uacute;meros" autofocus required>
+			<input type="text" id="boleta" name="boleta" pattern="([0-9]){10}" title="La boleta debe ser de 10 n&uacute;meros" autofocus required>
 			<label for="nombre" class="atach">Nombre completo</label>
 			<input type="text" id="nombre" name="nombre" pattern="^([a-zA-Z\s])*$" title="Solo letras" required>
 			<label for="carrera" class="atach">Carrera</label>

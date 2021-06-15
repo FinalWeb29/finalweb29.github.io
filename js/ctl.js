@@ -138,7 +138,7 @@ async function actualizar() {
 	.then(() => {
 		alert("¡Cita registrada!");
 		limpiar();
-		form["foto"].setAttribute("required", "");
+		form["foto"].setAttribute("required");
 	})
 	.catch((error) => {console.error("Error al registrar: ", error);});
 	subirArchivo(form["foto"].files[0], form["actua"].getAttribute("data-cita"));
